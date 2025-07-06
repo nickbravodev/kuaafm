@@ -1,0 +1,46 @@
+---
+import { ViewTransitions } from "astro:transitions";
+import SEO from "./SEO.astro";
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+
+const { title, title_tag, description, og_image, twitterHandle } = Astro.props;
+---
+
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="viewport" content="width=device-width" />
+
+    <title>{`${title} - ${title_tag}`}</title>
+    <link rel="canonical" href={canonicalURL} />  
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="description" content={description} />
+    <meta name="color-scheme" content="dark light" />
+    
+    <SEO
+      title={title}
+      title_tag={title_tag}
+      description={description}
+      og_image={og_image}
+      canonicalURL={canonicalURL}
+      twitterHandle="@kuaafm"
+   />
+    <!-- <meta property="og:title" content={`${title} - ${title_tag}`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content={`${Astro.url.origin}${og_image}`} />
+    <meta property="og:url" content={canonicalURL} />
+
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:site" content="@kuaafm"/>
+    <meta name="twitter:title" content={`${title} - ${title_tag}`}/>
+    <meta name="twitter:description" content={description}/>
+    <meta name="twitter:image" content={`${Astro.url.origin}${og_image}`}/> 
+    <meta property="twitter:url" content={canonicalURL} /> -->
+
+  </head>

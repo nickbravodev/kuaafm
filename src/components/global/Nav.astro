@@ -1,0 +1,199 @@
+---
+// Library imports
+import { Icon } from 'astro-icon/components';
+
+// Data imports
+import navData from '../../data/navData';
+
+// Component imports
+import Link from './Link.astro';
+// import PromoBanner from './banners/PromoBanner.astro';
+
+const { 
+  omitPromoBanner = false,
+  promoText = "Save 10&cent; or more off every gallon, every day.",
+  promoLinkText = "Upgrade to Nitro!",
+  promoLink = "/nitro",
+  promoIcon = {
+    name: "nitro-card",
+    size: 32
+  },
+  promoClasses = "",
+} = Astro.props;
+---
+    <header class="">
+      <div class="flex justify-between items-center header-wrapper">
+        <!-- Brand logo SVG -->
+        <a class="nav-logo" href="/" aria-label="Maverik Careers Home">
+          <div class="logo-box">
+            <!-- <Icon name="maverik-logo" /> -->
+          </div>
+          <!-- Brand name -->
+          <span class="sr-only">Maverik</span>
+        </a>
+        <div class="mobile-nav-control">
+          {
+            navData.map((item) => (
+              item.name === "Locations" &&
+              <button class="locations-mobile">
+                <Link
+                  text={item.name}
+                  href={item.path}
+                  target={item.target}
+                  classes={`${item.icon?.side === "left" ? "icon-left" : item.icon?.side === "right" ? "icon-right" : ""} ${item.classes}`}
+                  aria-label={item.name}
+                  icon={item.icon}
+                  data-navLink
+                />
+          
+              </button>
+            ))
+          }
+          <button class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
+            <span class="sr-only">Menu</span>
+            <Icon name="nav-toggle" />
+          </button>
+        </div>
+        <nav>
+          <ul id="primary-navigation" data-visible="false" class="primary-navigation flex justify-between items-center gap-4" aria-label="Main Navigation">
+            {
+              navData.map((item) => (
+                <li class="dropdown" data-dropdown={item.dropdown ? 'true' : 'false'}>
+                  <Link
+                    text={item.name}
+                    href={item.path}
+                    target={item.target}
+                    classes={`${item.icon?.side === "left" ? "icon-left" : item.icon?.side === "right" ? "icon-right" : ""} ${item.classes}`}
+                    aria-label={item.name}
+                    dropdown={item.dropdown}
+                    icon={item.icon}
+                    data-navLink
+                  />
+
+                  {item.dropdown && (
+                    
+                    <ul class="dropdown-menu">
+                  {item.dropdown.map((item) => (
+                    <li>
+                      <Link
+                        text={item.name}
+                        href={item.path}
+                        target={item.target}
+                        classes={item.classes}
+                        aria-label={item.name}
+                        icon={item.icon}
+                        data-navLink
+                      />
+                    </li>
+                  ))}
+                  </ul>
+                  )}
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+<script>
+  import "../../js/nav.js"
+</script>
+
+<script is:inline>
+  const primaryNav = document.querySelector('.primary-navigation');
+  const navToggle = document.querySelector('.mobile-nav-toggle');
+  
+  const openMenu = () => {
+      primaryNav.setAttribute('data-visible', 'true'); // Opens NAV popout
+      navToggle.setAttribute('aria-expanded', 'true'); 
+      document.body.classList.add('modal-open'); // Disables scrolling behavior on body
+  };
+
+  const closeMenu = () => {
+      primaryNav.setAttribute('data-visible', 'false'); // Closes NAV popout
+      navToggle.setAttribute('aria-expanded', 'false'); 
+      document.body.classList.remove('modal-open'); // Re-enables scrolling behavior on body
+  };
+
+  navToggle.addEventListener('click', () => {
+    const visibility = primaryNav.getAttribute('data-visible');
+
+    if (visibility === 'false') {
+      openMenu();
+    } else if (visibility === 'true') {
+      closeMenu();
+    }
+    
+  });
+  
+  // ESC key to close nav on mobile
+  document.addEventListener('keydown', function (e) {
+    const visibility = primaryNav.getAttribute('data-visible');
+    
+    if (e.key === 'Escape' && (visibility === 'true')) {
+      closeMenu();
+    }
+  });
+
+  // Store the scroll position when a dropdown is activated
+  let dropdownActivatedScrollY = null;
+
+  document.querySelectorAll('[data-dropdown]').forEach(button => {
+    button.addEventListener('click', (e) => {
+      const dropdown = button.closest('[data-dropdown]');
+      // Close other dropdowns
+      document.querySelectorAll('[data-dropdown].active').forEach(otherDropdown => {
+        if (otherDropdown !== dropdown) {
+          otherDropdown.classList.remove('active');
+          dropdown.classList.remove(':focus-within');
+        }
+      });
+      dropdown.classList.toggle('active');
+      // Toggle :focus-withing pseudo-class
+      dropdown.classList.toggle(':focus-within');
+      e.stopPropagation(); // Prevents the click from bubbling up to the document
+
+      // If activating, store the scroll position
+      if (dropdown.classList.contains('active')) {
+        dropdownActivatedScrollY = window.scrollY;
+      } else {
+        dropdownActivatedScrollY = null;
+      }
+    });
+  });
+
+  // Close dropdown on click outside
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('[data-dropdown]')) {
+      document.querySelectorAll('[data-dropdown].active').forEach(dropdown => {
+        dropdown.classList.remove('active');
+        dropdown.classList.remove(':focus-within');
+      });
+    }
+  });
+  
+  // Close all dropdowns on Escape key press
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('[data-dropdown].active').forEach(dropdown => {
+        dropdown.classList.remove('active');
+        dropdown.classList.remove(':focus-within');
+      });
+    }
+  });
+
+  // Close all dropdowns if the user scrolls 500px from the position where dropdown was activated
+  window.addEventListener('scroll', () => {
+    if (
+      dropdownActivatedScrollY !== null &&
+      Math.abs(window.scrollY - dropdownActivatedScrollY) > 500
+    ) {
+      document.querySelectorAll('[data-dropdown].active').forEach(dropdown => {
+        dropdown.classList.remove('active');
+        dropdown.classList.remove(':focus-within');
+      });
+      dropdownActivatedScrollY = null;
+    }
+  });
+</script>

@@ -1,3 +1,29 @@
 ---
-import './src/styles/global.css'
+import Footer from '../components/global/Footer.astro';
+import Head from '../components/global/Head.astro';
+import LightDarkToggle from '../components/global/LightDarkToggle.astro';
+import Nav from '../components/global/Nav.astro';
+import './src/css/global.css'
+
+const {
+  title = "",
+  title_tag = "KUAA 99.9 FM Salt Lake City",
+  description = "KUAA 99.9 FM is a Low Powered FM Community Radio Station broadcasting terrestrially in Salt Lake City at 99.9 FM, and streaming around the world at kuaafm.org",
+  og_image = "/images/og/generic.jpg",
+} = Astro.props;
 ---
+
+<html lang="en" prefix="og: https://ogp.me/ns#" 
+  class="antialiased leading-tight
+  text-gray-700 dark:text-gray-200">
+  <Head {title} {title_tag} {description} {og_image} />
+  <body class="flex flex-col justify-between min-h-svh 
+  bg-gray-100 dark:bg-gray-900">
+    <LightDarkToggle />
+    <Nav />
+    <main class="flex flex-col grow items-center justify-center min-h-fit p-5 pt-20">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

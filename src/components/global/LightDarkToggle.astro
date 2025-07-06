@@ -1,0 +1,145 @@
+---
+// Library imports
+import { Icon } from 'astro-icon/components';
+---
+
+    <aside class="theme-wrapper">
+      <div class="" role="group">
+        <button id="toggle-light" class="theme flex items-center gap-3" aria-label="Toggle Light Mode" data-theme="light">
+          <Icon name="light-mode-toggle" size={24} />
+          Toggle Light Mode
+        </button>
+        <button id="toggle-dark" class="theme flex items-center gap-3" aria-label="Toggle Light Mode" data-theme="dark">
+          <Icon name="dark-mode-toggle" size={24} />
+          Toggle Dark Mode
+        </button>
+      </div>
+    </aside>
+
+
+
+<script type="module">  
+    
+    // TOGGLE BUTTON DISPLAY FUNCTION - Displays appropriate toggle button
+    const toggleButtonDisplay = () => {
+      if (document.documentElement.getAttribute('data-theme') === 'dark') {
+        // Dark
+        document.documentElement.classList.add('dark')
+        document.getElementById('toggle-dark').classList.add('toggle-off');
+        document.getElementById('toggle-light').classList.remove('toggle-off');
+      } else if (document.documentElement.getAttribute('data-theme') === 'light') {
+        // Light
+        document.documentElement.classList.remove('dark')
+        document.getElementById('toggle-light').classList.add('toggle-off');
+        document.getElementById('toggle-dark').classList.remove('toggle-off');
+      }
+    }
+    // END TOGGLE BUTTON DISPLAY FUNCTION
+        
+        
+    // USER PREFERENCE TOGGLE DISPLAY - Initial toggle button (based on user preference)
+    const colorSchemeQueryList = window.matchMedia('(prefers-color-scheme: dark)');
+    
+    // Assigns correct toggle button based on user preference
+    const setColorScheme = e => {
+      if (e.matches) {
+        // Dark
+        document.documentElement.classList.add('dark')
+        document.getElementById('toggle-dark').classList.add('toggle-off');
+        document.getElementById('toggle-light').classList.remove('toggle-off');
+      } else {
+        // Light
+        document.documentElement.classList.remove('dark')
+        document.getElementById('toggle-light').classList.add('toggle-off');
+        document.getElementById('toggle-dark').classList.remove('toggle-off');
+      }
+    }
+  
+  setColorScheme(colorSchemeQueryList);
+  colorSchemeQueryList.addEventListener('change', setColorScheme);
+// END USER PREFERENCE TOGGLE DISPLAY
+
+  
+// TOGGLE BUTTON ACTION
+  // Button controls
+  const themeToggle = document.querySelectorAll('.theme');
+
+  const handleThemeChange = (e) => {
+    const theme = e.currentTarget.dataset.theme;
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('astroColorTheme', theme);
+    toggleButtonDisplay();
+    
+  }
+  
+  themeToggle.forEach(t => t.addEventListener('click', handleThemeChange))
+// END TOGGLE BUTTON ACTION
+
+
+// USER PREFERENCE STORAGE
+  // Store user preference
+  window.addEventListener('DOMContentLoaded', () => {
+    const theme = localStorage.getItem('astroColorTheme');
+    theme && document.documentElement.setAttribute('data-theme', theme);
+    toggleButtonDisplay();
+  })
+// END USER PREFERENCE STORAGE
+
+</script>
+
+
+
+<style lang="scss">
+  .theme-wrapper {
+    // position: fixed;
+    // right: 0.5rem;
+    // bottom: 0.5rem;
+    display: grid;
+    place-items: center;
+    padding: 0rem;
+    z-index: 10000;
+  }
+  .theme-container {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .theme {
+    // border-radius: 100vmax;
+    // padding: 0.5em;
+    // display: grid;
+    // place-items: center;
+    cursor: pointer;
+    // position: relative;
+
+    svg {
+      --_icon-size: 1.25rem;
+      height: var(--_icon-size);
+      width: var(--_icon-size);
+    }
+
+    // &::after {
+    //   content: attr(aria-label);
+    //   position: absolute;
+    //   right: calc(100% + 0.5rem);
+    //   z-index: 10000;
+    //   font-size: 0.8em;
+    //   min-width: max-content;
+    //   padding: 0.5em 0.5em;
+    //   border-radius: var(--border-radius);
+    //   color: var(--mav-white);
+    //   background-color: var(--mav-black);
+    //   opacity: 0;
+    //   transition: opacity var(--_transition_fast) ease-in-out;
+    //   transform: translateY(500%);
+    // }
+        
+    // &:is(:hover, :focus-visible)::after {
+    //   opacity: 1;
+    //   transform: translateY(0%);
+    // }
+  }
+
+  .toggle-off {
+    display: none;
+  }
+</style>

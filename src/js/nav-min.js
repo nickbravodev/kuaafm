@@ -1,0 +1,1 @@
+const navLinks=document.querySelectorAll("[data-navLink]");navLinks.forEach((t=>{t.getAttribute("href")===window.location.pathname&&t.setAttribute("aria-current","page")}));

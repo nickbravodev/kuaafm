@@ -1,0 +1,68 @@
+---
+// Library imports
+import { Icon } from 'astro-icon/components';
+
+interface Props {
+  text: string;
+  href: string;
+  target?: string;
+  style?: string;
+  icon?: {
+        name: string;
+        side: "left" | "right";
+    }
+  classes?: string;
+  dropdown?: string;
+}
+
+const {
+  text,
+  href,
+  target,
+  style,
+  icon,
+  classes,
+  dropdown,
+  ...rest
+} = Astro.props as Props;
+---
+
+{dropdown ?
+<button
+  class:list={[ classes, style ]} 
+  {...rest}>{
+  icon && icon.side === "left" && (
+    <div style="width: 20px">
+      <Icon name={icon.name} size={20} data-dropdown-button={dropdown ? 'true' : 'false'} />
+    </div>
+  )
+}<span 
+  data-dropdown-button={dropdown ? 'true' : 'false'}
+  >{text}</span>{
+  icon && icon.side === "right" && (
+    <div style="width: 20px">
+      <Icon name={icon.name} size={20} data-dropdown-button={dropdown ? 'true' : 'false'} />
+    </div>
+  )
+}
+</button> :
+<a href={href} 
+  target={target} 
+aria-label=`${ target === ("_blank") ? "Opens in a new window": "" }`
+rel=`${ target === ("_blank") ? "noopener noreferrer": "" }`
+  class:list={[ classes, style ]} 
+  {...rest}>{
+    icon && icon.side === "left" && (
+      <div style="width: 20px">
+        <Icon name={icon.name} size={20} />
+      </div>
+    )
+}<span>{text}</span>{
+  icon && icon.side === "right" && (
+    <div style="width: 20px">
+      <Icon name={icon.name} size={20} />
+    </div>
+  )
+}
+</a>
+}
