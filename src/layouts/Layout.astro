@@ -3,6 +3,7 @@ import Footer from '../components/global/Footer.astro';
 import Head from '../components/global/Head.astro';
 import LightDarkToggle from '../components/global/LightDarkToggle.astro';
 import Nav from '../components/global/Nav.astro';
+import Player from '../components/global/Player.astro';
 import './src/css/global.css'
 
 const {
@@ -17,13 +18,15 @@ const {
   class="antialiased leading-tight
   text-gray-700 dark:text-gray-200">
   <Head {title} {title_tag} {description} {og_image} />
-  <body class="flex flex-col justify-between min-h-svh 
-  bg-gray-100 dark:bg-gray-900">
-    <LightDarkToggle />
-    <Nav />
-    <main class="flex flex-col grow items-center justify-center min-h-fit p-5 pt-20">
-      <slot />
-    </main>
-    <Footer />
+  <body class="flex dark:bg-gray-900">
+    <!-- <LightDarkToggle /> -->
+    <Player />
+    <div class="flex flex-col justify-between min-h-svh bg-gray-100 w-full">
+      <Nav />
+      <main class="flex flex-col grow items-center justify-center min-h-fit p-5 pt-20">
+        <slot />
+      </main>
+      <Footer />
+    </div>
   </body>
 </html>

@@ -21,80 +21,72 @@ const {
   promoClasses = "",
 } = Astro.props;
 ---
-    <header class="">
-      <div class="flex justify-between items-center header-wrapper">
-        <!-- Brand logo SVG -->
-        <a class="nav-logo" href="/" aria-label="Maverik Careers Home">
-          <div class="logo-box">
-            <!-- <Icon name="maverik-logo" /> -->
-          </div>
-          <!-- Brand name -->
-          <span class="sr-only">Maverik</span>
-        </a>
-        <div class="mobile-nav-control">
-          {
-            navData.map((item) => (
-              item.name === "Locations" &&
-              <button class="locations-mobile">
-                <Link
-                  text={item.name}
-                  href={item.path}
-                  target={item.target}
-                  classes={`${item.icon?.side === "left" ? "icon-left" : item.icon?.side === "right" ? "icon-right" : ""} ${item.classes}`}
-                  aria-label={item.name}
-                  icon={item.icon}
-                  data-navLink
-                />
-          
-              </button>
-            ))
-          }
-          <button class="mobile-nav-toggle" aria-controls="primary-navigation" aria-expanded="false">
-            <span class="sr-only">Menu</span>
-            <Icon name="nav-toggle" />
-          </button>
-        </div>
-        <nav>
-          <ul id="primary-navigation" data-visible="false" class="primary-navigation flex justify-between items-center gap-4" aria-label="Main Navigation">
-            {
-              navData.map((item) => (
-                <li class="dropdown" data-dropdown={item.dropdown ? 'true' : 'false'}>
+<header class="flex items-center justify-center w-full md:h-16 z-1000 
+   bg-gray-200 dark:bg-gray-800 before:-z-1">
+  <div class="max-w-screen-xl w-full mx-auto flex items-center justify-between px-5">
+    <!-- Brand logo SVG -->
+    <!-- <a class="nav-logo h-6" href="/" aria-label="KUAA FM Home"> -->
+      <!-- <div class="logo-box"> -->
+        <!-- <Icon name="kuaa-logo" class="size-full" /> -->
+      <!-- </div> -->
+      <!-- Brand name -->
+      <!-- <span class="sr-only">KUAA FM</span> -->
+    <!-- </a> -->
+    <button class="mobile-nav-toggle fixed top-4 left-4 bg-gray-300 dark:bg-gray-700 p-4.5 rounded-full md:hidden size-16" aria-controls="primary-navigation" aria-expanded="false" id="mobile-nav-toggle">
+      <span class="sr-only">Menu</span>
+      <Icon name="nav-toggle" class="size-full" id="nav-toggle-icon" />
+      <Icon name="close-button" class="size-full hidden" id="close-toggle-icon" />
+    </button>
+    <nav class="fixed -z-1 md:static md:z-1">
+      <ul id="primary-navigation" data-visible="false" class="primary-navigation 
+        fixed top-0 right-0 size-full bg-gray-200 dark:bg-gray-800 pt-16
+        flex flex-col items-center justify-start gap-4
+        w-full h-100vh
+        translate-x-full transition
+        data-[visible='true']:translate-x-0
+        before:content-['']
+        md:static md:size-auto md:bg-transparent md:translate-x-0 md:pt-0
+        md:flex-row md:items-center md:justify-center
+        md:before:content-none md:h-auto md:w-auto" aria-label="Main Navigation">
+        {
+          navData.map((item) => (
+            <li class="dropdown" data-dropdown={item.dropdown ? 'true' : 'false'}>
+              <Link
+                text={item.name}
+                href={item.path}
+                target={item.target}
+                classes={`${item.icon?.side === "left" ? "icon-left" : item.icon?.side === "right" ? "icon-right" : ""} ${item.classes}`}
+                aria-label={item.name}
+                dropdown={item.dropdown}
+                icon={item.icon}
+                data-navLink
+              />
+
+              {item.dropdown && (
+                
+                <ul class="dropdown-menu">
+              {item.dropdown.map((item) => (
+                <li>
                   <Link
                     text={item.name}
                     href={item.path}
                     target={item.target}
-                    classes={`${item.icon?.side === "left" ? "icon-left" : item.icon?.side === "right" ? "icon-right" : ""} ${item.classes}`}
+                    classes={item.classes}
                     aria-label={item.name}
-                    dropdown={item.dropdown}
                     icon={item.icon}
                     data-navLink
                   />
-
-                  {item.dropdown && (
-                    
-                    <ul class="dropdown-menu">
-                  {item.dropdown.map((item) => (
-                    <li>
-                      <Link
-                        text={item.name}
-                        href={item.path}
-                        target={item.target}
-                        classes={item.classes}
-                        aria-label={item.name}
-                        icon={item.icon}
-                        data-navLink
-                      />
-                    </li>
-                  ))}
-                  </ul>
-                  )}
                 </li>
-              ))
-            }
-          </ul>
-        </nav>
-      </div>
-    </header>
+              ))}
+              </ul>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
 
 <script>
   import "../../js/nav.js"
@@ -104,16 +96,23 @@ const {
   const primaryNav = document.querySelector('.primary-navigation');
   const navToggle = document.querySelector('.mobile-nav-toggle');
   
+  const navToggleIcon = document.getElementById('nav-toggle-icon');
+  const closeToggleIcon = document.getElementById('close-toggle-icon');
+
   const openMenu = () => {
-      primaryNav.setAttribute('data-visible', 'true'); // Opens NAV popout
-      navToggle.setAttribute('aria-expanded', 'true'); 
-      document.body.classList.add('modal-open'); // Disables scrolling behavior on body
+    primaryNav.setAttribute('data-visible', 'true'); // Opens NAV popout
+    navToggle.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('modal-open'); // Disables scrolling behavior on body
+    navToggleIcon.classList.add('hidden');
+    closeToggleIcon.classList.remove('hidden');
   };
 
   const closeMenu = () => {
-      primaryNav.setAttribute('data-visible', 'false'); // Closes NAV popout
-      navToggle.setAttribute('aria-expanded', 'false'); 
-      document.body.classList.remove('modal-open'); // Re-enables scrolling behavior on body
+    primaryNav.setAttribute('data-visible', 'false'); // Closes NAV popout
+    navToggle.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('modal-open'); // Re-enables scrolling behavior on body
+    navToggleIcon.classList.remove('hidden');
+    closeToggleIcon.classList.add('hidden');
   };
 
   navToggle.addEventListener('click', () => {
