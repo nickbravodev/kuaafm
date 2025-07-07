@@ -60,7 +60,7 @@ export default function Player() {
             <div className="player-spin">
                 <img
                     src={
-                        spin.image || '/src/assets/images/now-playing-fallback'
+                        spin.image || '/assets/images/now-playing-fallback.png'
                     }
                     alt={spin.song || 'Spin image'}
                     style={{ maxWidth: 200 }}
