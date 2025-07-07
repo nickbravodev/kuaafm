@@ -10,6 +10,24 @@
   <button id="nav-play-btn" class="btn btn-danger btn-lg">
       <i id="nav-play-icon" class="bi bi-play-fill"></i> Listen Live
   </button>
+  
+  <div id="player-container" class="player-container text-center">
+    <div id="player-art-bg" class="player-art-bg">
+      <img id="player-art-fg" src="https://placehold.co/200/2d3436/dfe6e9?text=KUAA"
+      alt="Album Art" class="player-art-fg" crossorigin="anonymous">
+    </div>
+    <div class="player-info">
+      <p id="player-song" class="song-title mb-0">Loading Song...</p>
+      <p id="player-artist" class="artist-name mb-1">Loading Artist...</p>
+      <p id="player-album" class="album-name mb-3">Loading Album...</p>
+      <div class="player-controls d-flex justify-content-center align-items-center">
+        <button id="volume-btn" class="mx-3" aria-label="Toggle Mute"><i id="volume-icon" class="bi bi-volume-up-fill"></i></button>
+        <button id="play-pause-btn" class="play-btn mx-3" aria-label="Play or Pause"><i id="play-pause-icon" class="bi bi-play-fill"></i></button>
+        <button class="mx-3" aria-label="Favorite this song"><i class="bi bi-heart"></i></button>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <script is:inline>
