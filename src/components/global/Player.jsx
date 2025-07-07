@@ -157,7 +157,7 @@ export default function Player() {
                 </div>
             </div>
             <div className="recent-spins" style={{ marginTop: 32 }}>
-                <h2>Recent Spins</h2>
+                <h2>Playlist</h2>
                 {recentError && <div>Error: {recentError}</div>}
                 <ul style={{ listStyle: 'none', padding: 0 }}>
                     {recentSpins.map((item, idx) => (
