@@ -1,16 +1,16 @@
-// src/pages/api/spins.js
-// Astro endpoint to securely proxy Spinitron API requests
+// src/pages/api/recent-spins.js
+// Astro endpoint to securely proxy Spinitron API requests for recent spins
 
 export async function GET() {
-    const spinitronApiKey = import.meta.env.SPINITRON_API_KEY
-    if (!spinitronApiKey) {
+    const apiKey = import.meta.env.SPINITRON_API_KEY
+    if (!apiKey) {
         return new Response(JSON.stringify({ error: 'API key not set' }), {
             status: 500,
             headers: { 'Content-Type': 'application/json' },
         })
     }
 
-    const url = `https://spinitron.com/api/spins?access-token=${spinitronApiKey}&station=kuaa&count=1&with=show,personas`
+    const url = `https://spinitron.com/api/spins?access-token=${apiKey}&station=kuaa&count=6`
 
     try {
         const apiRes = await fetch(url)
@@ -21,7 +21,7 @@ export async function GET() {
         })
     } catch (err) {
         return new Response(
-            JSON.stringify({ error: 'Failed to fetch spins' }),
+            JSON.stringify({ error: 'Failed to fetch recent spins' }),
             {
                 status: 500,
                 headers: { 'Content-Type': 'application/json' },
