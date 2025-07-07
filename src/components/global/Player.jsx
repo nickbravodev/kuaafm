@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 // This component fetches from an Astro server endpoint (see instructions below)
 export default function Player() {
     const [spin, setSpin] = useState(null)
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
+    const [muted, setMuted] = useState(true)
+    const audioRef = useRef(null)
 
     useEffect(() => {
         fetch('/api/spins')
@@ -26,6 +28,17 @@ export default function Player() {
             })
     }, [])
 
+    // Keep audio muted state in sync
+    useEffect(() => {
+        if (audioRef.current) {
+            audioRef.current.muted = muted
+        }
+    }, [muted])
+
+    const handleToggleMute = () => {
+        setMuted((prev) => !prev)
+    }
+
     if (loading) return <div>Loading...</div>
     if (error) return <div>Error: {error}</div>
     if (!spin) return <div>No data</div>
@@ -40,9 +53,70 @@ export default function Player() {
                         style={{ maxWidth: 200 }}
                     />
                 )}
+                <div>Song: {spin.song}</div>
                 <div>Artist: {spin.artist}</div>
                 <div>Release: {spin.release}</div>
-                <div>Song: {spin.song}</div>
+                <div style={{ marginTop: 16 }}>
+                    <button
+                        onClick={handleToggleMute}
+                        style={{
+                            background: 'none',
+                            border: 'none',
+                            cursor: 'pointer',
+                            fontSize: 32,
+                            display: 'flex',
+                            alignItems: 'center',
+                        }}
+                        aria-label={muted ? 'Unmute audio' : 'Mute audio'}
+                    >
+                        {muted ? (
+                            // Play icon (muted)
+                            <svg
+                                width="32"
+                                height="32"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            >
+                                <polygon points="5 3 19 12 5 21 5 3" />
+                                <line
+                                    x1="1"
+                                    y1="1"
+                                    x2="23"
+                                    y2="23"
+                                    stroke="red"
+                                    strokeWidth="2"
+                                />
+                            </svg>
+                        ) : (
+                            // Play icon (unmuted)
+                            <svg
+                                width="32"
+                                height="32"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                            >
+                                <polygon points="5 3 19 12 5 21 5 3" />
+                            </svg>
+                        )}
+                        <span style={{ marginLeft: 8 }}>
+                            {muted ? 'Unmute' : 'Mute'}
+                        </span>
+                    </button>
+                    <audio
+                        ref={audioRef}
+                        src="https://stream.xmission.com/kuaa"
+                        autoPlay
+                        muted={muted}
+                    />
+                </div>
             </div>
         </div>
     )
