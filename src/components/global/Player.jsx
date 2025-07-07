@@ -46,13 +46,13 @@ export default function Player() {
     return (
         <div className="w-108 min-h-svh bg-gray-400">
             <div className="player-spin">
-                {spin.image && (
-                    <img
-                        src={spin.image}
-                        alt={spin.song || 'Spin image'}
-                        style={{ maxWidth: 200 }}
-                    />
-                )}
+                <img
+                    src={
+                        spin.image || '/src/assets/images/now-playing-fallback'
+                    }
+                    alt={spin.song || 'Spin image'}
+                    style={{ maxWidth: 200 }}
+                />
                 <div>Song: {spin.song}</div>
                 <div>Artist: {spin.artist}</div>
                 <div>Release: {spin.release}</div>
