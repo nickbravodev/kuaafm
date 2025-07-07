@@ -9,23 +9,35 @@ export default function Player() {
     const audioRef = useRef(null)
 
     useEffect(() => {
-        fetch('/api/spins')
-            .then((res) => {
-                if (!res.ok) throw new Error('Network response was not ok')
-                return res.json()
-            })
-            .then((data) => {
-                if (data.items && data.items.length > 0) {
-                    setSpin(data.items[0])
-                } else {
-                    setError('No spin data available')
-                }
-                setLoading(false)
-            })
-            .catch((err) => {
-                setError(err.message)
-                setLoading(false)
-            })
+        let isMounted = true
+        const fetchSpin = () => {
+            fetch('/api/spins')
+                .then((res) => {
+                    if (!res.ok) throw new Error('Network response was not ok')
+                    return res.json()
+                })
+                .then((data) => {
+                    if (!isMounted) return
+                    if (data.items && data.items.length > 0) {
+                        setSpin(data.items[0])
+                        setError(null)
+                    } else {
+                        setError('No spin data available')
+                    }
+                    setLoading(false)
+                })
+                .catch((err) => {
+                    if (!isMounted) return
+                    setError(err.message)
+                    setLoading(false)
+                })
+        }
+        fetchSpin()
+        const interval = setInterval(fetchSpin, 5000) // 5 seconds
+        return () => {
+            isMounted = false
+            clearInterval(interval)
+        }
     }, [])
 
     // Keep audio muted state in sync
