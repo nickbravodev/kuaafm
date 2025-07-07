@@ -2,6 +2,6 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-theme {
-  /* @apply bg-white dark:bg-gray-900; */
-}
+/* theme {
+  @apply bg-white dark:bg-gray-900;
+} */
