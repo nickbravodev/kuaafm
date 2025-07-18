@@ -12,19 +12,12 @@ export default function Player() {
 
     useEffect(() => {
         let isMounted = true
-        // Helper to call Astro Actions
-        async function callAstroAction(actionName) {
-            const res = await fetch(`/actions/${actionName}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({})
-            });
-            if (!res.ok) throw new Error('Network response was not ok');
-            return res.json();
-        }
-
         const fetchSpin = () => {
-            callAstroAction('getSpin')
+            fetch('/api/spins')
+                .then((res) => {
+                    if (!res.ok) throw new Error('Network response was not ok')
+                    return res.json()
+                })
                 .then((data) => {
                     if (!isMounted) return
                     if (data.items && data.items.length > 0) {
@@ -42,7 +35,11 @@ export default function Player() {
                 })
         }
         const fetchRecentSpins = () => {
-            callAstroAction('getRecentSpins')
+            fetch('/api/recent-spins')
+                .then((res) => {
+                    if (!res.ok) throw new Error('Network response was not ok')
+                    return res.json()
+                })
                 .then((data) => {
                     if (!isMounted) return
                     if (data.items && data.items.length > 0) {
