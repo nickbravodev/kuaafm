@@ -14,7 +14,7 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
   adapter: netlify(),
-  output: "server",
+  // output: "server",
   site: "https://kuaafm.org",
 
   integrations: [
