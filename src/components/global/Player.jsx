@@ -59,7 +59,7 @@ export default function Player() {
         const interval = setInterval(() => {
             fetchSpin()
             fetchRecentSpins()
-        }, 5000) // 5 seconds
+        }, 20000) // 20 seconds
         return () => {
             isMounted = false
             clearInterval(interval)
