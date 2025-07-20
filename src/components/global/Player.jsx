@@ -82,7 +82,7 @@ export default function Player() {
     if (!spin) return <div>No data</div>
 
     return (
-        <div className="w-108 h-svh overflow-scroll bg-gray-400">
+        <div className="w-full h-svh overflow-scroll">
             <div className="player-spin">
                 <img
                     src={

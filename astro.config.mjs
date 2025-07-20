@@ -13,7 +13,9 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-  adapter: netlify(),
+  adapter: netlify({
+    edgeMiddleware: true,
+  }),
   // output: "server",
   site: "https://kuaafm.org",
 
