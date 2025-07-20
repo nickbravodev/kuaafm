@@ -16,7 +16,7 @@ export default defineConfig({
   adapter: netlify({
     edgeMiddleware: true,
   }),
-  // output: "server",
+  output: "server",
   site: "https://kuaafm.org",
 
   integrations: [
