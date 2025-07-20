@@ -2,6 +2,8 @@
 import Player from '../global/Player.jsx';
 ---
 
-<div class="w-108 min-h-svh bg-gray-400">
-    <Player client:load />
-</div>
+    <div class="w-(--player-width) overflow-hidden bg-gray-400 m-0 md:m-4 lg:m-8 rounded-0 md:rounded-[1rem] lg:rounded-[2rem]">
+        <div>
+            <Player client:load />
+        </div>
+    </div>

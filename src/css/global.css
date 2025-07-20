@@ -2,6 +2,9 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* theme {
-  @apply bg-white dark:bg-gray-900;
-} */
+@import "./width.css";
+
+@theme {
+  /* --radius-large: var(--spacing) * 8;
+  --radius-xlarge: var(--spacing) * 12; */
+}

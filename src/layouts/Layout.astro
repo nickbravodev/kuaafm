@@ -1,10 +1,10 @@
 ---
+import '../css/global.css'
 import Footer from '../components/global/Footer.astro';
 import Head from '../components/global/Head.astro';
 import LightDarkToggle from '../components/global/LightDarkToggle.astro';
 import Nav from '../components/global/Nav.astro';
 import Player from '../components/global/Player.astro';
-import '../css/global.css'
 
 const {
   title = "",
@@ -18,12 +18,12 @@ const {
   class="antialiased leading-tight
   text-gray-700 dark:text-gray-200">
   <Head {title} {title_tag} {description} {og_image} />
-  <body class="flex dark:bg-gray-900">
+  <body class="flex dark:bg-gray-900 h-svh overflow-hidden">
     <!-- <LightDarkToggle /> -->
     <Player />
-    <div class="flex flex-col justify-between min-h-svh bg-gray-100 w-full">
+    <div class="flex flex-col justify-between min-h-svh w-(--body-width) overflow-y-scroll">
       <Nav />
-      <main class="flex flex-col grow items-center justify-center min-h-fit p-5 pt-20">
+      <main class="flex flex-col grow items-center justify-center min-h-fit p-5 pt-20 my-0 md:my-4 lg:my-8 bg-gray-100">
         <slot />
       </main>
       <Footer />
