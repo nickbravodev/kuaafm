@@ -23,7 +23,9 @@ export default defineConfig({
     react(),
     icon(),
     mdx(),
-    sitemap(),
+    sitemap({
+      filter: (page) => page !== 'https://kuaafm.org/admin/',
+    }),
     robotsTxt({
       sitemap: ["https://kuaafm.org/sitemap-0.xml"],
       host: "https://kuaafm.org",
