@@ -22,7 +22,7 @@ const {
 } = Astro.props;
 ---
 <header class="px-8 py-6 flex items-center justify-center w-full z-1000 
-   bg-gray-200 dark:bg-gray-800 before:-z-1 md:rounded-bl-[1rem] lg:rounded-bl-[2rem]">
+  bg-[var(--kuaa-bg-component)] text-[var(--kuaa-text)] transition-colors duration-300 before:-z-1 md:rounded-bl-[1rem] lg:rounded-bl-[2rem]">
   <div class="max-w-screen-xl w-full mx-auto flex items-center justify-between">
     <!-- Brand logo SVG -->
     <!-- <a class="nav-logo h-6" href="/" aria-label="KUAA FM Home"> -->
@@ -32,14 +32,14 @@ const {
       <!-- Brand name -->
       <!-- <span class="sr-only">KUAA FM</span> -->
     <!-- </a> -->
-    <button class="mobile-nav-toggle fixed top-4 left-4 bg-gray-300 dark:bg-gray-700 p-4.5 rounded-full md:hidden size-16" aria-controls="primary-navigation" aria-expanded="false" id="mobile-nav-toggle">
+  <button class="mobile-nav-toggle fixed top-4 left-4 bg-gray-300 dark:bg-gray-700 p-4.5 rounded-full md:hidden size-16 transition-colors" aria-controls="primary-navigation" aria-expanded="false" id="mobile-nav-toggle">
       <span class="sr-only">Menu</span>
       <Icon name="nav-toggle" class="size-full" id="nav-toggle-icon" />
       <Icon name="close-button" class="size-full hidden" id="close-toggle-icon" />
     </button>
     <nav class="fixed -z-1 md:static md:z-1">
       <ul id="primary-navigation" data-visible="false" class="primary-navigation 
-        fixed top-0 right-0 size-full bg-gray-200 dark:bg-gray-800 pt-16
+        fixed top-0 right-0 size-full bg-[var(--kuaa-bg-component)] text-[var(--kuaa-text)] transition-colors pt-16
         flex flex-col items-center justify-start gap-4
         w-full h-100vh
         translate-x-full transition

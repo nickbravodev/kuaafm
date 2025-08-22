@@ -18,12 +18,12 @@ const {
   class="antialiased leading-tight
   text-gray-700 dark:text-gray-200">
   <Head {title} {title_tag} {description} {og_image} />
-  <body class="flex dark:bg-gray-900 h-svh overflow-hidden">
+  <body class="flex h-svh overflow-hidden bg-[var(--kuaa-bg)] text-[var(--kuaa-text)] transition-colors duration-300">
     <!-- <LightDarkToggle /> -->
     <Player />
-    <div class="flex flex-col justify-between min-h-svh w-(--body-width) overflow-y-scroll">
+  <div class="flex flex-col justify-between min-h-svh w-(--body-width) overflow-y-scroll bg-[var(--kuaa-bg)] text-[var(--kuaa-text)] transition-colors duration-300">
       <Nav />
-      <main class="flex flex-col grow items-center justify-center min-h-fit p-5 pt-20 my-0 md:my-4 lg:my-8 bg-gray-100">
+  <main class="flex flex-col grow items-center justify-center min-h-fit p-5 pt-20 my-0 md:my-4 lg:my-8 bg-[var(--kuaa-bg)] text-[var(--kuaa-text)] transition-colors duration-300">
         <slot />
       </main>
       <Footer />

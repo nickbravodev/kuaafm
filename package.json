@@ -19,6 +19,7 @@
     "astro": "^5.13.3",
     "astro-icon": "^1.1.5",
     "astro-robots-txt": "^1.0.0",
+    "colorthief": "^2.6.0",
     "decap-cms-app": "^3.8.3",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",

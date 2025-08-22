@@ -1,10 +1,17 @@
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+@layer base {
+    html {
+        font-family: 'Roboto', theme('fontFamily.sans'), sans-serif;
+    }
+}
+@import 'tailwindcss';
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-@import "./width.css";
+@import './width.css';
 
 @theme {
-  /* --radius-large: var(--spacing) * 8;
+    /* --radius-large: var(--spacing) * 8;
   --radius-xlarge: var(--spacing) * 12; */
 }
