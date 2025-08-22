@@ -161,7 +161,7 @@ export default function Player() {
             document.body.style.setProperty('--kuaa-bg-component', '#fff')
             document.body.style.setProperty('--kuaa-text', '#222')
         }
-    }, [spin && spin.image])
+    }, [spin?.image])
 
     // Keep audio muted state in sync
     useEffect(() => {
@@ -179,10 +179,13 @@ export default function Player() {
     if (!spin) return <div>No data</div>
 
     return (
-        <div className="min-h-screen w-full font-sans flex items-center justify-center">
-            <div className="relative max-w-lg w-full mx-auto flex flex-col items-center justify-center">
+        <div className="min-h-screen w-full font-sans flex items-end justify-end pb-12">
+            <div
+                className="relative max-w-lg w-full mx-auto flex flex-col items-center justify-end h-full"
+                style={{ height: 'calc(100vh - 3rem)' }}
+            >
                 {/* Main Player Card */}
-                <div className="relative z-10 flex flex-col items-center w-full rounded-3xl shadow-2xl bg-white/30 dark:bg-black/30 backdrop-blur-lg border border-white/40 dark:border-black/40 p-8 pt-10 pb-8">
+                <div className="relative z-10 flex flex-col items-center w-full h-full rounded-3xl shadow-2xl bg-white/30 dark:bg-black/30 backdrop-blur-lg border border-white/40 dark:border-black/40 p-8 pt-10 pb-8">
                     <img
                         ref={imgRef}
                         src={
@@ -276,8 +279,8 @@ export default function Player() {
                 </div>
                 {/* Recent Spins Popup (inside player card) */}
                 {showRecent && (
-                    <div className="absolute top-0 left-0 right-0 z-30 flex justify-center items-start">
-                        <div className="relative w-full max-w-md bg-white/90 dark:bg-black/90 rounded-2xl shadow-2xl p-6 flex flex-col max-h-[60vh] overflow-y-auto border border-white/40 dark:border-black/40 animate-fade-in mt-4">
+                    <div className="absolute inset-0 z-30 flex flex-col">
+                        <div className="flex-1 w-full h-full bg-white/90 dark:bg-black/90 rounded-2xl shadow-2xl p-6 flex flex-col overflow-y-auto border border-white/40 dark:border-black/40 animate-fade-in">
                             <button
                                 onClick={() => setShowRecent(false)}
                                 className="absolute top-3 right-3 p-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 shadow"
